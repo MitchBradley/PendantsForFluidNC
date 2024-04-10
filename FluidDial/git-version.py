@@ -14,31 +14,18 @@ if gitFail:
     url = " (noGit)"
 else:
     branchname = (
-      subprocess.check_output(["git", "rev-parse", "--abbrev-ref", "HEAD"])
-      .strip()
-      .decode("utf-8")
+        subprocess.check_output(["git", "rev-parse", "--abbrev-ref", "HEAD"])
+        .strip()
+        .decode("utf-8")
     )
-    revision = (
-        subprocess.check_output(["git", "rev-parse", "--short", "HEAD"])
-            .strip()
-            .decode("utf-8")
-    )
-    modified = (
-        subprocess.check_output(["git", "status", "-uno", "-s"])
-            .strip()
-            .decode("utf-8")
-    )
+    revision = subprocess.check_output(["git", "rev-parse", "--short", "HEAD"]).strip().decode("utf-8")
+    modified = subprocess.check_output(["git", "status", "-uno", "-s"]).strip().decode("utf-8")
     if modified:
         dirty = "-dirty"
     else:
         dirty = ""
     rev = " (%s-%s%s)" % (branchname, revision, dirty)
-
-  url = (
-    subprocess.check_output(["git", "config", "--get", "remote.origin.url"])
-        .strip()
-        .decode("utf-8")
-  )
+    url = subprocess.check_output(["git", "config", "--get", "remote.origin.url"]).strip().decode("utf-8")
 
 git_info = rev
 git_url = url
